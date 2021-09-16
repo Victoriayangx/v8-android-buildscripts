@@ -14,6 +14,8 @@ V8_PATCHSET_ANDROID=(
   # Support to specify custom timezone
   # https://github.com/Kudo/react-native-v8/issues/37
   "custom_timezone.patch"
+
+   "date.patch"
 )
 
 V8_PATCHSET_IOS=(
