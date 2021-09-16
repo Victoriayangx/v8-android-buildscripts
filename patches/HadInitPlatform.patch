@@ -1,0 +1,44 @@
+diff --git a/src/api/api.cc b/src/api/api.cc
+index f64538ec1c..500dfb533a 100644
+--- a/src/api/api.cc
++++ b/src/api/api.cc
+@@ -5653,6 +5653,10 @@ bool v8::V8::Initialize() {
+   return true;
+ }
+
++bool v8::V8::HadInitPlatform() {
++  return i::V8::HadInitPlatform();
++}
++
+ #if V8_OS_LINUX || V8_OS_MACOSX
+ bool TryHandleWebAssemblyTrapPosix(int sig_code, siginfo_t* info,
+                                    void* context) {
+diff --git a/src/init/v8.cc b/src/init/v8.cc
+index edcc399f95..f894b8a0ed 100644
+--- a/src/init/v8.cc
++++ b/src/init/v8.cc
+@@ -130,6 +130,10 @@ void V8::InitializePlatform(v8::Platform* platform) {
+   v8::tracing::TracingCategoryObserver::SetUp();
+ }
+
++bool V8::HadInitPlatform() {
++  return platform_ != nullptr;
++}
++
+ void V8::ShutdownPlatform() {
+   CHECK(platform_);
+   v8::tracing::TracingCategoryObserver::TearDown();
+diff --git a/src/init/v8.h b/src/init/v8.h
+index a8cd6832cd..e29a3bfad1 100644
+--- a/src/init/v8.h
++++ b/src/init/v8.h
+@@ -31,6 +31,7 @@ class V8 : public AllStatic {
+
+   static void InitializePlatform(v8::Platform* platform);
+   static void ShutdownPlatform();
++  static bool HadInitPlatform();
+   V8_EXPORT_PRIVATE static v8::Platform* GetCurrentPlatform();
+   // Replaces the current platform with the given platform.
+   // Should be used only for testing.
+
+

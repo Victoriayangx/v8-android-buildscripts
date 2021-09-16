@@ -16,6 +16,7 @@ V8_PATCHSET_ANDROID=(
   "custom_timezone.patch"
 
    "date.patch"
+   "HadInitPlatform.patch"
 )
 
 V8_PATCHSET_IOS=(
